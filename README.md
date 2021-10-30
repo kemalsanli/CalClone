@@ -25,7 +25,7 @@ Still not came across specific issue,
 
 ## UI
 
-![UI 1](https://github.com/kemalsanli/pasta/blob/main/image/calclone.png?raw=true)
+![UI 1](https://github.com/kemalsanli/CalClone/blob/main/image/calclone.png?raw=true)
 
 
 ## Contribute
