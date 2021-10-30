@@ -122,13 +122,13 @@ class CalClone: UIViewController {
     }
     
     @IBAction func equalButtonClicked(_ sender: Any) {
-        if calculatorLabel.text != "0" && previousValue != 0 && !waitingForSecondValue{
+        if calculatorLabel.text != "0" && previousValue != 0{
             //Division
             if aritmethicOperationsSelection == 0 {
                 let result = previousValue / Float(calculatorLabel.text!)!
                 calculatorLabel.text = String(format: "%g", result)
                 divisonButton.backgroundColor = divisonButton.tintColor
-                divisonButton.tintColor = .white                
+                divisonButton.tintColor = .white
             }
             //Multiply
             if aritmethicOperationsSelection == 1 {
