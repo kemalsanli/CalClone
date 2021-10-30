@@ -39,13 +39,13 @@ class CalClone: UIViewController {
     
     var previousValue:Float = 0.0
     var waitingForSecondValue = false
-    var aritmethicOperationsSelection = 0
+    var aritmethicOperationsSelection = 4
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFunc()
-
+        
     }
-
+    
     
     
     @IBAction func percentButtonClicked(_ sender: Any) {
@@ -79,49 +79,83 @@ class CalClone: UIViewController {
         calculatorLabel.text = "0"
         previousValue = 0.0
         waitingForSecondValue = false
+        aritmethicOperationsSelection = 4
+        clearSelected(multiplyButton,minusButton,divisonButton,plusButton)
+        
+        
+    }
+    func clearSelected(_ buttons:UIButton...){
+        for button in buttons{
+            if button.backgroundColor == .white {
+                button.backgroundColor = UIColor(#colorLiteral(red: 0.9398755431, green: 0.5829923153, blue: 0.07876548916, alpha: 1))
+                button.tintColor = .white
+            }
+        }
     }
     @IBAction func arithmeticOperations(_ sender: UIButton) {
-        if calculatorLabel.text != "0"{
-            previousValue = Float(calculatorLabel.text!)!
-            waitingForSecondValue = true
-            aritmethicOperationsSelection = sender.tag
-            sender.tintColor = sender.backgroundColor
-            sender.backgroundColor = .white
+        if sender.tintColor == .white {
+            if calculatorLabel.text != "0"{
+                previousValue = Float(calculatorLabel.text!)!
+                waitingForSecondValue = true
+                aritmethicOperationsSelection = sender.tag
+                sender.tintColor = sender.backgroundColor
+                sender.backgroundColor = .white
+                clearMoreSelection(sender.tag)
+            }
+        }else{
+            waitingForSecondValue = false
+            clearSelected(sender)
         }
-        
+    }
+    func clearMoreSelection(_ tag:Int){
+        if tag == 0 {
+            clearSelected(multiplyButton,minusButton,plusButton)
+        }else if tag == 1{
+            clearSelected(minusButton,divisonButton,plusButton)
+        }else if tag == 2 {
+            clearSelected(multiplyButton,divisonButton,plusButton)
+        }else if tag == 3 {
+            clearSelected(multiplyButton,minusButton,divisonButton)
+        }else {
+            clearSelected(multiplyButton,minusButton,divisonButton,plusButton)
+        }
     }
     
     @IBAction func equalButtonClicked(_ sender: Any) {
-        if calculatorLabel.text != "0" {
-        //Division
-        if aritmethicOperationsSelection == 0 {
-            let result = previousValue / Float(calculatorLabel.text!)!
-            calculatorLabel.text = String(format: "%g", result)
-            
-            divisonButton.backgroundColor = divisonButton.tintColor
-            divisonButton.tintColor = .white
-        }
-        //Multiply
-        if aritmethicOperationsSelection == 1 {
-            let result = previousValue * Float(calculatorLabel.text!)!
-            calculatorLabel.text = String(format: "%g", result)
-            multiplyButton.backgroundColor = multiplyButton.tintColor
-            multiplyButton.tintColor = .white
-        }
-        //Minus
-        if aritmethicOperationsSelection == 2 {
-            let result = previousValue - Float(calculatorLabel.text!)!
-            calculatorLabel.text = String(format: "%g", result)
-            minusButton.backgroundColor = minusButton.tintColor
-            minusButton.tintColor = .white
-        }
-        //Plus
-        if aritmethicOperationsSelection == 3 {
-            let result = previousValue + Float(calculatorLabel.text!)!
-            calculatorLabel.text = String(format: "%g", result)
-            plusButton.backgroundColor = plusButton.tintColor
-            plusButton.tintColor = .white
-        }
+        if calculatorLabel.text != "0" && previousValue != 0 && !waitingForSecondValue{
+            //Division
+            if aritmethicOperationsSelection == 0 {
+                let result = previousValue / Float(calculatorLabel.text!)!
+                calculatorLabel.text = String(format: "%g", result)
+                divisonButton.backgroundColor = divisonButton.tintColor
+                divisonButton.tintColor = .white                
+            }
+            //Multiply
+            if aritmethicOperationsSelection == 1 {
+                let result = previousValue * Float(calculatorLabel.text!)!
+                calculatorLabel.text = String(format: "%g", result)
+                multiplyButton.backgroundColor = multiplyButton.tintColor
+                multiplyButton.tintColor = .white
+            }
+            //Minus
+            if aritmethicOperationsSelection == 2 {
+                let result = previousValue - Float(calculatorLabel.text!)!
+                calculatorLabel.text = String(format: "%g", result)
+                minusButton.backgroundColor = minusButton.tintColor
+                minusButton.tintColor = .white
+            }
+            //Plus
+            if aritmethicOperationsSelection == 3 {
+                let result = previousValue + Float(calculatorLabel.text!)!
+                calculatorLabel.text = String(format: "%g", result)
+                plusButton.backgroundColor = plusButton.tintColor
+                plusButton.tintColor = .white
+            }
+            //When Nothing Selected.
+            if aritmethicOperationsSelection == 4 {
+                //Nothing Happens here <--
+            }
+            aritmethicOperationsSelection = 4
         }
         
     }
@@ -160,7 +194,7 @@ extension CalClone {
     }
     func setupFunc(){
         circleButtons(acButton,negativeButton,percentButton,divisonButton,multiplyButton,minusButton,plusButton,equalButton,commaButton,keypad1Button,keypad2Button,keypad3Button,keypad4Button,keypad5Button,keypad6Button,keypad7Button,keypad8Button,keypad9Button)
-
+        
         keypad0Button.layer.cornerRadius = 40
     }
 }
